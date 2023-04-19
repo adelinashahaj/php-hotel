@@ -51,17 +51,42 @@ $hotels = [
     ],
 
 ];
-foreach($hotels as $hotel){
-    foreach($hotel as $chiave => $valore) {
-   
-        echo 'Chiave: ' . $chiave . ' - Valore ' . $valore . '<br/>';
-    }
-}
+
+
 
 ?>
+<?php
+$filtarggioparc = [];
 
- 
-<table class="table table-striped">
+if(isset($_GET['parking']) && $_GET['parking'] ==="1"){
+    foreach($hotels as $hotel){
+        if($hotel['parking'] == true) {
+            $filtarggioparc[] = $hotel;
+        }
+    }
+}else{
+    $filtarggioparc = $hotels;
+}
+?>
+
+<form method="GET" action="index.php">
+
+<select id="genere" name="parking">
+                <option value="0">scegli</option>
+                <option value="1">con parceggio</option>
+               
+</select>
+
+<button type="submit">Invia</button>
+<button type="reset">Resetta</button>
+
+</form>
+
+
+
+
+ <div class="container">
+ <table class="table table-striped">
 <thead>
     <tr>
       <th scope="col">Nome</th>
@@ -75,7 +100,7 @@ foreach($hotels as $hotel){
 
     <?php
 
-            foreach($hotels as $hotel) {
+            foreach($filtarggioparc as $hotel) {
                 echo "<tr>
                 <td> " . $hotel['name'] . "</td>
                 <td> " . $hotel['description']. "</td>
@@ -92,5 +117,7 @@ foreach($hotels as $hotel){
     
   </tbody>
 </table>
+ </div>
+
 </body>
 </html>
